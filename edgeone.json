@@ -1,0 +1,43 @@
+{
+  "buildCommand": "corepack pnpm build",
+  "installCommand": "corepack pnpm install --no-frozen-lockfile",
+  "outputDirectory": "dist",
+  "nodeVersion": "24.18.0",
+  "headers": [
+    {
+      "source": "/api/firefly/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/admin/*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        }
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "name": "firefly-friend-circle-daily",
+      "cron": "15 4 * * *",
+      "path": "/api/cron/friend-circle",
+      "method": "POST",
+      "timezone": "Asia/Shanghai"
+    }
+  ]
+}

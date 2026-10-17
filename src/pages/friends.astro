@@ -12,6 +12,7 @@ import {
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import FriendCircle from "@/components/recovery/FriendCircle.astro";
 import "@/styles/pages/common.css";
 import "@/styles/pages/friends.css";
 
@@ -173,6 +174,8 @@ const description =
       </div>
     </div>
   </div>
+
+  <FriendCircle />
 
   {friendsPageConfig.showCustomContent !== false && (
     <div class="mt-4 card-base z-10 px-9 py-6 relative w-full">

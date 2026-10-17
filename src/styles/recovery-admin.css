@@ -1,0 +1,13 @@
+.firefly-recovery-admin {--admin-border:var(--line-divider,#ddd); color:var(--text-color,#2d3142)}
+.firefly-recovery-admin .input{width:100%;min-height:40px;padding:10px 13px;margin:5px 0 12px;background:var(--card-bg,#ffffff0d);color:inherit;border:1px solid var(--admin-border);border-radius:10px;font:inherit}
+.firefly-recovery-admin textarea.input{resize:vertical;line-height:1.55}
+.firefly-recovery-admin button{cursor:pointer}
+.firefly-recovery-admin .btn{background:var(--primary,#438acb);color:white;border:0;padding:10px 19px;border-radius:10px}
+.firefly-recovery-admin .icon-btn{border:1px solid var(--admin-border);border-radius:10px;padding:8px 12px;background:transparent;color:inherit}
+.firefly-recovery-admin .btn:disabled,.firefly-recovery-admin .icon-btn:disabled{opacity:.45;cursor:not-allowed}
+.firefly-recovery-admin .actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:12px 0}
+.firefly-recovery-admin .grid-cards{display:grid;grid-template-columns:minmax(220px,1fr) minmax(320px,2fr);gap:22px}
+.firefly-recovery-admin .list-link{width:100%;display:block;text-align:left;padding:10px 6px;border-bottom:1px solid var(--admin-border);background:transparent;color:inherit}
+.firefly-recovery-admin .muted{opacity:.65}.firefly-recovery-admin .note{padding:12px;border:1px solid var(--admin-border);border-radius:10px}
+.firefly-recovery-admin label{display:block;margin:8px 0}.firefly-recovery-admin details{padding:12px 0;border-bottom:1px solid var(--admin-border)}
+@media(max-width:800px){.firefly-recovery-admin .grid-cards{grid-template-columns:1fr}}

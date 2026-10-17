@@ -1,0 +1,11 @@
+---
+import MainGridLayout from '@/layouts/MainGridLayout.astro';
+import AdminApp from '@/components/recovery/AdminApp.svelte';
+import '@/styles/recovery-admin.css';
+---
+<MainGridLayout title="内容后台" description="Firefly 内容、动态、站点设置与相册目录管理">
+  <section class="card-base firefly-recovery-admin" style="padding:1.5rem;min-height:70vh">
+    <h1 style="font-size:1.5rem;margin-bottom:1.5rem">内容后台</h1>
+    <AdminApp client:load />
+  </section>
+</MainGridLayout>

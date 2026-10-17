@@ -1,0 +1,42 @@
+<!-- Restores the user's friend-circle card list without old GitHub Actions or retired branch URLs. -->
+<section class="mt-4 card-base z-10 px-6 md:px-9 py-6 relative w-full" data-friend-circle aria-labelledby="fc-title">
+  <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+    <h2 id="fc-title" class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">友链朋友圈</h2>
+    <span class="text-sm text-neutral-500 dark:text-neutral-400" data-fc-meta aria-live="polite">正在加载动态…</span>
+  </div>
+  <div class="hidden mb-4 rounded-xl border border-(--line-divider) p-4" data-fc-random></div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-fc-list></div>
+  <nav class="mt-4 flex justify-center items-center gap-2 flex-wrap" data-fc-pagination aria-label="友链朋友圈分页"></nav>
+  <p class="hidden text-neutral-500 dark:text-neutral-400 text-center py-9" data-fc-empty>暂时没有抓取到友链文章，EdgeOne 每天会自动更新一次。</p>
+</section>
+<script>
+ function initFriendCircle(){
+  document.querySelectorAll<HTMLElement>('[data-friend-circle]').forEach(panel=>{
+   if(panel.dataset.started==='1')return;panel.dataset.started='1';
+   const list=panel.querySelector<HTMLElement>('[data-fc-list]')!,meta=panel.querySelector<HTMLElement>('[data-fc-meta]')!,pagination=panel.querySelector<HTMLElement>('[data-fc-pagination]')!,random=panel.querySelector<HTMLElement>('[data-fc-random]')!,empty=panel.querySelector<HTMLElement>('[data-fc-empty]')!;
+   const size=12;let page=1;let articles:any[]=[];
+   function card(a:any,randomCard=false){
+    const node=document.createElement('a');node.className='block rounded-xl border border-(--line-divider) hover:border-(--primary) p-4 hover:shadow-md transition';
+    const u=String(a.link||'');let url:URL;try{url=new URL(u)}catch{return null}if(url.protocol!=='https:'&&url.protocol!=='http:')return null;
+    node.href=url.href;node.target='_blank';node.rel='noopener noreferrer';
+    const heading=document.createElement('strong');heading.className='block text-lg font-bold text-neutral-900 dark:text-neutral-100';heading.textContent=String(a.title||'');
+    const summary=document.createElement('p');summary.className='text-sm text-neutral-500 dark:text-neutral-400 mt-1 line-clamp-2';summary.textContent=String(a.summary||'');
+    const info=document.createElement('small');info.className='text-xs text-neutral-500 dark:text-neutral-400 mt-2 block';info.textContent=`${String(a.author||'')} · ${a.created?new Date(a.created).toLocaleDateString('zh-CN'):''}`;
+    node.append(heading,summary,info);return node;
+   }
+   function render(){list.replaceChildren();pagination.replaceChildren();random.replaceChildren();random.classList.add('hidden');empty.classList.toggle('hidden',articles.length>0);
+    if(!articles.length)return;
+    const pick=articles[Math.floor(Math.random()*articles.length)];const r=card(pick,true);
+    if(r){const label=document.createElement('div');label.className='font-bold text-sm mb-2';label.textContent='随便转转 · 随机推荐';random.append(label,r);random.classList.remove('hidden');}
+    const count=Math.ceil(articles.length/size);page=Math.min(Math.max(1,page),count);
+    for(const a of articles.slice((page-1)*size,page*size)){const c=card(a);if(c)list.append(c)}
+    if(count>1){for(const next of [Math.max(1,page-1),page,Math.min(count,page+1)]){if([...pagination.querySelectorAll('button')].some(b=>b.dataset.page===String(next)))continue;const btn=document.createElement('button');btn.type='button';btn.dataset.page=String(next);btn.className='px-3 py-1.5 border border-(--line-divider) rounded-lg';btn.textContent=next===page?`第 ${next} 页`:String(next);btn.disabled=next===page;btn.onclick=()=>{page=next;render();panel.scrollIntoView({behavior:'smooth',block:'start'})};pagination.append(btn)}}
+   }
+   fetch('/api/friend-circle.json',{headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(data=>{
+    articles=Array.isArray(data.article_data)?data.article_data:[];const stats=data.statistical_data||{};meta.textContent=`${Number(stats.active_num||0)} 个订阅 · ${articles.length} 篇文章 · ${String(stats.last_updated_time||'待更新')}`;render();
+   }).catch(()=>{meta.textContent='数据暂时不可用';empty.classList.remove('hidden');empty.textContent='朋友圈数据暂不可用；友链列表与其他功能不受影响。'});
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initFriendCircle,{once:true});else initFriendCircle();
+ document.addEventListener('astro:page-load',initFriendCircle);
+</script>

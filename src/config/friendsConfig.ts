@@ -22,6 +22,22 @@ export const friendsPageConfig: FriendsPageConfig = {
 
 // 友链配置
 export const friendsConfig: FriendLink[] = [
+	{title:"星宇安全实验室",siteurl:"https://bk.zhaozhiqiang.pw/",imgurl:"",desc:"",tags:["Blog"],weight:30,enabled:true},
+	{title:"Lin Blog",siteurl:"https://linlog.top",imgurl:"",desc:"",tags:["Blog"],weight:29,enabled:true},
+	{title:"星空驿站 Starlight Station",siteurl:"https://baiyangmu.xyz",imgurl:"",desc:"",tags:["Blog"],weight:28,enabled:true},
+	{title:"星诺的博客",siteurl:"https://blog.astrvow.com/",imgurl:"",desc:"",tags:["Blog"],weight:27,enabled:true},
+	{title:"Aimerting",siteurl:"https://blog.xuioo.com/",imgurl:"",desc:"",tags:["Blog"],weight:26,enabled:true},
+	{title:"SengokuCola’sBlog",siteurl:"https://home.nibutupaopao.top",imgurl:"",desc:"",tags:["Blog"],weight:25,enabled:true},
+	{title:"Eric-Termina的博客",siteurl:"https://blog.ericterminal.com",imgurl:"",desc:"",tags:["Blog"],weight:24,enabled:true},
+	{title:"MmzMing的知识库",siteurl:"https://tblog.mmzhiku.xyz",imgurl:"",desc:"",tags:["Blog"],weight:23,enabled:true},
+	{title:"Elykia",siteurl:"https://blog.elykia.cn",imgurl:"",desc:"",tags:["Blog"],weight:22,enabled:true},
+	{title:"十三",siteurl:"https://blog.nw177.cn",imgurl:"",desc:"",tags:["Blog"],weight:21,enabled:true},
+	{title:"versus0",siteurl:"https://blog.542000.xyz",imgurl:"",desc:"",tags:["Blog"],weight:20,enabled:true},
+	{title:"年华",siteurl:"https://blog.520781.xyz",imgurl:"",desc:"",tags:["Blog"],weight:19,enabled:true},
+	{title:"L!!!!ght",siteurl:"https://sunlight.kejk.cn",imgurl:"",desc:"",tags:["Blog"],weight:18,enabled:true},
+	{title:"Hyde Blog",siteurl:"https://seasir.top",imgurl:"",desc:"",tags:["Blog"],weight:17,enabled:true},
+	{title:"番茄主理人",siteurl:"https://fqzlr.com",imgurl:"",desc:"",tags:["Blog"],weight:16,enabled:true},
+	{title:"若木秋光の Blog Ver.3.0",siteurl:"https://blog.rmqg.org/",imgurl:"",desc:"",tags:["Blog"],weight:15,enabled:true},
 	{
 		title: "夏夜流萤",
 		imgurl:
