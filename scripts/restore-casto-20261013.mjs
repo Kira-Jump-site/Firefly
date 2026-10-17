@@ -3,23 +3,44 @@ import {tmpdir} from "node:os";
 import {join,resolve} from "node:path";
 import {createHash} from "node:crypto";
 import {execFileSync} from "node:child_process";
-const URL="https://firefly-archive-keeper.guojunyang666666.workers.dev/firefly-original-20261013-bae2cf47.tar.gz";
+import {pathToFileURL} from "node:url";
+const ARCHIVE_URL="https://firefly-archive-keeper.guojunyang666666.workers.dev/firefly-original-20261013-bae2cf47.tar.gz";
 const SHA="bae2cf471317ba0813e30df964c044b81ec13f11f990da24067878c6b36e764b",BYTES=6907376;
 const modules=["AdminApp.BvivyVgR.js","AdminDashboard.vfh0FXr2.js","AdminPostManager.BFNSyUTB.js","AdminDynamicManager.DmUPNvw0.js","GalleryAdminManager.DgIVl1e9.js","AdminSiteSettings.u4IzuQYO.js","AdminBackup.y-T-uhdG.js"];
+const CACHE_FILE=resolve("node_modules/.cache/firefly-original-20261013.tar.gz");
+async function obtainVerifiedArchive(fetcher=fetch){
+ const env=process.env.FIREFLY_ORIGINAL_ARCHIVE;
+ let bytes=env?await readFile(env):await readFile(CACHE_FILE).catch(()=>null);
+ const valid=b=>b?.length===BYTES&&createHash("sha256").update(b).digest("hex")===SHA;
+ if(!valid(bytes)&&env)throw Error("Offline original archive mismatch");
+ if(!valid(bytes)){
+  const response=await fetcher(ARCHIVE_URL,{redirect:"error",signal:AbortSignal.timeout(90000)});
+  if(!response.ok)throw Error("Original archive HTTP "+response.status);
+  bytes=Buffer.from(await response.arrayBuffer());
+  if(!valid(bytes))throw Error("Original archive mismatch");
+  await mkdir(resolve("node_modules/.cache"),{recursive:true});
+  await writeFile(CACHE_FILE,bytes);
+ }
+ return env?resolve(env):CACHE_FILE;
+}
+export async function prepareOriginalMedia({fetcher=fetch}={}){
+ const archive=await obtainVerifiedArchive(fetcher);
+ const temp=await mkdtemp(join(tmpdir(),"firefly-original-media-"));
+ try{
+  execFileSync("tar",["-xzf",archive,"-C",temp,"firefly-original-media/"],{timeout:30000});
+  const target=resolve("public/assets/casto-original");
+  await mkdir(target,{recursive:true});
+  for(const name of ["favicon.ico","logo.png","avatar.webp","desktop-1.webp","desktop-2.webp","desktop-3.webp","mobile-1.webp","mobile-2.webp","mobile-3.webp"])
+   await cp(join(temp,"firefly-original-media",name),join(target,name));
+  await mkdir(resolve("public/favicon"),{recursive:true});
+  await cp(join(target,"favicon.ico"),resolve("public/favicon/favicon.ico"));
+  console.log("Original Casto media restored before Astro build: 9 files");
+ }finally{await rm(temp,{recursive:true,force:true})}
+}
 export async function restoreOriginalAdmin(dist="dist",{fetcher=fetch}={}){
  const temp=await mkdtemp(join(tmpdir(),"firefly-20261013-"));
  try{
-  let archive=process.env.FIREFLY_ORIGINAL_ARCHIVE||"";
-  if(!archive){
-   const response=await fetcher(URL,{redirect:"error",signal:AbortSignal.timeout(90000)});
-   if(!response.ok)throw Error("Original archive HTTP "+response.status);
-   const bytes=Buffer.from(await response.arrayBuffer());
-   if(bytes.length!==BYTES||createHash("sha256").update(bytes).digest("hex")!==SHA)throw Error("Original archive mismatch");
-   archive=join(temp,"verified.tar.gz");await writeFile(archive,bytes);
-  }else{
-   const bytes=await readFile(archive);
-   if(bytes.length!==BYTES||createHash("sha256").update(bytes).digest("hex")!==SHA)throw Error("Offline original archive mismatch");
-  }
+  const archive=await obtainVerifiedArchive(fetcher);
   const files=execFileSync("tar",["-tzf",archive],{encoding:"utf8",maxBuffer:3000000}).split("\n").filter(Boolean);
   if(files.some(x=>x.startsWith("/")||x.split("/").includes("..")||!/^firefly-original-(20261013|media)(\/|$)/.test(x)))throw Error("Unsafe original archive");
   execFileSync("tar",["-xzf",archive,"-C",temp],{timeout:30000});
@@ -46,4 +67,7 @@ export async function restoreOriginalAdmin(dist="dist",{fetcher=fetch}={}){
   console.log("Firefly original Oct 13 admin restored:",manifest.assets.length,"verified files");
  }finally{await rm(temp,{recursive:true,force:true})}
 }
-if(import.meta.url===new URL("file://"+process.argv[1]).href)restoreOriginalAdmin(process.argv[2]||"dist").catch(e=>{console.error(e);process.exitCode=1});
+if(process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
+ const run=process.argv[2]==="--prepare"?prepareOriginalMedia():restoreOriginalAdmin(process.argv[2]||"dist");
+ run.catch(e=>{console.error(e);process.exitCode=1});
+}
