@@ -291,6 +291,7 @@ onMount(() => {
 				const response = await fetch(source);
 				if (!response.ok) throw new Error(`HTTP ${response.status}`);
 				entries = (await response.json()) as DynamicData[];
+				if(!Array.isArray(entries)||entries.length===0){const backup=await fetch("/assets/recovered-public-dynamic.json");if(backup.ok)entries=(await backup.json()) as DynamicData[];}
 			}
 			// 更新页面计数
 			const countEl = document.querySelector("[data-dynamic-page-count]");
@@ -312,7 +313,7 @@ onMount(() => {
 			}
 		} catch (error) {
 			console.error("Failed to load dynamics", error);
-			failed = true;
+			try{const backup=await fetch("/assets/recovered-public-dynamic.json");if(!backup.ok)throw Error("backup unavailable");entries=(await backup.json()) as DynamicData[];populateYears();applyFilters(false);}catch{failed=true;}
 		} finally {
 			loading = false;
 		}

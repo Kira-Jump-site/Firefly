@@ -1,27 +1,22 @@
 # 关于我 / About Me
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+你好，欢迎来到 **星遐蝶梦（Casto）**。
 
-## 🛠️ 关于本站
+> 因为 Casto.top 便宜，所以叫 Casto……其实是我推的遐蝶啦（Castorice）。
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+我在学习**微电子科学与工程**，平时记录课程、硬件探索、网站开发，以及摄影、动漫和 MMD 等兴趣。这里是个人笔记与作品整理空间，而不是主题模板演示站。
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+## 关于本站
 
+使用 [Astro](https://astro.build/) 与 [Firefly](https://github.com/CuteLeaf/Firefly) 构建，主要部署于 EdgeOne Pages。内容涵盖编程学习、微电子、技术项目和日常见闻。
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+## 联系与交流
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
+- [Bilibili](https://space.bilibili.com/393766623)
+- [GitHub](https://github.com/SteveGuo1726)
+- [QQ 交流群](https://qm.qq.com/q/PBynpUViEM)
+- [RSS 订阅](/rss/)
 
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
+也欢迎看看[动态](/dynamic/)、[相册](/gallery/)、[项目](/projects/)和[友情链接](/friends/)。
 
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
-
----
-
-*感谢你的来访！希望在这里能找到对你有用的内容！*
-
+*星穹漫遐，蝶携清梦。*

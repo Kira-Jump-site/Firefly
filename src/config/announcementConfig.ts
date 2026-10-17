@@ -5,7 +5,7 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "",
 
 	// 公告内容
-	content: "欢迎来到Casto！这是一则示例公告。",
+	content: "欢迎来到星遐蝶梦！这里记录微电子学习、代码项目和生活中的美好瞬间。",
 
 	// 是否允许用户关闭公告
 	closable: true,

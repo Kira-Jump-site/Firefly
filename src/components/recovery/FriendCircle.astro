@@ -32,9 +32,14 @@
     for(const a of articles.slice((page-1)*size,page*size)){const c=card(a);if(c)list.append(c)}
     if(count>1){for(const next of [Math.max(1,page-1),page,Math.min(count,page+1)]){if([...pagination.querySelectorAll('button')].some(b=>b.dataset.page===String(next)))continue;const btn=document.createElement('button');btn.type='button';btn.dataset.page=String(next);btn.className='px-3 py-1.5 border border-(--line-divider) rounded-lg';btn.textContent=next===page?`第 ${next} 页`:String(next);btn.disabled=next===page;btn.onclick=()=>{page=next;render();panel.scrollIntoView({behavior:'smooth',block:'start'})};pagination.append(btn)}}
    }
-   fetch('/api/friend-circle.json',{headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(data=>{
-    articles=Array.isArray(data.article_data)?data.article_data:[];const stats=data.statistical_data||{};meta.textContent=`${Number(stats.active_num||0)} 个订阅 · ${articles.length} 篇文章 · ${String(stats.last_updated_time||'待更新')}`;render();
-   }).catch(()=>{meta.textContent='数据暂时不可用';empty.classList.remove('hidden');empty.textContent='朋友圈数据暂不可用；友链列表与其他功能不受影响。'});
+   (async()=>{try{
+     let data:any;try{const resp=await fetch('/api/friend-circle.json',{cache:'no-store'});if(resp.ok)data=await resp.json()}catch{}
+     if(!Array.isArray(data?.article_data)||data.article_data.length===0){const resp=await fetch('/assets/recovered-friend-circle.json');if(resp.ok)data=await resp.json()}
+     articles=Array.isArray(data?.article_data)?data.article_data:[];
+     if(!articles.length)throw Error('empty archive');
+     const stats=data.statistical_data||{};meta.textContent=`${Number(stats.active_num||0)} 个订阅 · ${articles.length} 篇文章 · ${String(stats.last_updated_time||'历史快照')}`;render();
+    }catch{meta.textContent='朋友圈数据暂不可用';empty.classList.remove('hidden');empty.textContent='朋友圈暂不可用，请稍后重试。'}
+   })();
   });
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initFriendCircle,{once:true});else initFriendCircle();

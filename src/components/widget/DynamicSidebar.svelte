@@ -48,11 +48,11 @@ onMount(async () => {
 			data = await fetchWithDedup(apiUrl);
 		}
 
+		if(!Array.isArray(data)||data.length===0){const backup=await fetch("/assets/recovered-public-dynamic.json");if(backup.ok)data=(await backup.json()) as DynamicEntry[];}
 		totalCount = data.length;
 		entries = data.slice(0, limit);
 		updateCountBadge();
-	} catch {
-		error = true;
+	} catch {try{const backup=await fetch("/assets/recovered-public-dynamic.json");if(!backup.ok)throw Error("backup unavailable");const data=(await backup.json()) as DynamicEntry[];totalCount=data.length;entries=data.slice(0,limit);updateCountBadge()}catch{error=true}
 	} finally {
 		loading = false;
 	}

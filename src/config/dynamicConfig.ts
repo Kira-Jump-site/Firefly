@@ -20,7 +20,7 @@ export const dynamicConfig: DynamicConfig = {
 	// 可改为第三方接口地址，如 "https://firefly.cuteleaf.cn/api/dynamic.json"
 	// 数据结构可打开上方链接地址参考
 	// 当 memos.enable 为 true 时，此配置会被忽略
-	apiUrl: "/api/firefly/dynamic-feed-public",
+	apiUrl: "/api/dynamic.json",
 
 	// ========== Memos 配置 ==========
 	// 启用后客户端会直接从 Memos API 实时获取数据，apiUrl 配置将被忽略

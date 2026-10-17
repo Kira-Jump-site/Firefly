@@ -2,7 +2,7 @@ import type { AnalyticsConfig } from "../types/analyticsConfig";
 
 export const analyticsConfig: AnalyticsConfig = {
 	// Google Analytics ID
-	googleAnalyticsId: "",
+	googleAnalyticsId: "3PvIirDkY8Gsd38Z",
 	// Microsoft Clarity ID
 	microsoftClarityId: "",
 	// Umami 统计配置
@@ -36,11 +36,11 @@ export const analyticsConfig: AnalyticsConfig = {
 		// 51la 统计 ID
 		Id: "",
 		// 自定义 SDK JS 地址，防止 DNS 污染，留空使用默认地址
-		sdkUrl: "",
+		sdkUrl: "https://sdk.51.la/js-sdk-pro.min.js",
 		// 多个统计 ID 的数据分离标识，留空则使用 Id
-		ck: "",
+		ck: "3PvIirDkY8Gsd38Z",
 		// 是否开启事件分析功能
-		autoTrack: false,
+		autoTrack: true,
 		//  Hash路由模式, 项目使用History API路由, 所以不必开启默认false
 		hashMode: false,
 		// 是否开启网站录屏功能
