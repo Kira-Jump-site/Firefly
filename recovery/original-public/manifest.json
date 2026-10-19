@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "source": "https://blog.casto.top",
+  "captured": "2026-10-17",
+  "pages": [
+    {
+      "route": "gallery",
+      "file": "gallery.html.gz",
+      "sha256": "d57c6a15c83bb6f7b51d49a1af667b7567d18635a5b80988e6187d3beebebea1",
+      "bytes": 293913
+    },
+    {
+      "route": "gallery/castorice-2026",
+      "file": "gallery__castorice-2026.html.gz",
+      "sha256": "43a32ff1c017bb4d4df7d8e22ddc938fd573a90719b36535f876de854ee3dbb5",
+      "bytes": 283368
+    },
+    {
+      "route": "gallery/firefly-2026",
+      "file": "gallery__firefly-2026.html.gz",
+      "sha256": "561cf4f808e9757ea837e018b5abdf732fc6597e98671d0a25f6f4fa14d26435",
+      "bytes": 281700
+    },
+    {
+      "route": "friends",
+      "file": "friends.html.gz",
+      "sha256": "54c0b3fc56fefdb40ab375adbb0d103063f907631a265e6321a7771f3f7d5214",
+      "bytes": 344530
+    }
+  ],
+  "assets": [
+    {
+      "url": "/_astro/GalleryBrowser.BExrdAO0.js",
+      "sha256": "ba6f56cdd552246ad7f5a803a3496c5b4fe9141c8c87f00ea5c18c16e66d0ece",
+      "bytes": 6629
+    },
+    {
+      "url": "/_astro/GalleryAlbumRuntime.BRxCXkdF.js",
+      "sha256": "18b0b8082ac82905004fd32795f4ea40da830b5a025700caeba08d23a844e230",
+      "bytes": 6149
+    },
+    {
+      "url": "/_astro/index.R0rlsuFd.css",
+      "sha256": "30c83284ff662977e44ae7d68c250bfbc499a9ebb1fcd66ddb18f4e5c547602f",
+      "bytes": 7901
+    },
+    {
+      "url": "/_astro/GalleryAlbumRuntime.Q65cePgy.css",
+      "sha256": "119818b555041a9a74d676383cb33d81067afe467c81efbf0dbd72f52223469c",
+      "bytes": 36481
+    },
+    {
+      "url": "/_astro/ec.a8dky.css",
+      "sha256": "eb2a112d28c5a4cc2355036df0a9009feb0611dc2db9463114d1a1126143d455",
+      "bytes": 28816
+    },
+    {
+      "url": "/_astro/m1.7GkZSNaY_Z21uli1.webp",
+      "sha256": "8b75e76871b6ebf2d548986183e1526b2f2a5a9b8629fb9588a72609ba3272c8",
+      "bytes": 124728
+    },
+    {
+      "url": "/_astro/m2.KUzx68h9_Z2tQ7Vu.webp",
+      "sha256": "57814ab06be838360c5d9363ae51509754cb95b2d4e34e1c3f020ed01d99dcc3",
+      "bytes": 126760
+    },
+    {
+      "url": "/_astro/m3.B89B0hr1_ZrP7nQ.webp",
+      "sha256": "004e90b69136f4b6b3095fc44cb8c856e4df173148c62f6c64f6c447f5594eb9",
+      "bytes": 113844
+    },
+    {
+      "url": "/_astro/d1.BQFDgVOj_Z2wvyek.webp",
+      "sha256": "fc333d1beed8836bb1a14aaa88d92e144feb2bc4d935c0498ab10dc69b25bb9c",
+      "bytes": 159790
+    },
+    {
+      "url": "/_astro/d2.ClldUe-n_27FLS1.webp",
+      "sha256": "79ba76b2b48e020dedd2ab6b83235ec99490957b186a1fbbc5826c938115010c",
+      "bytes": 191898
+    },
+    {
+      "url": "/_astro/d3.DHjKXQVe_CJNSw.webp",
+      "sha256": "32a238a5c533908b60cfd9192d14938b382d2c371e632e8ca116cc242bf6cc1d",
+      "bytes": 169670
+    },
+    {
+      "url": "/_astro/avatar.BmbZMO2d_tYXRX.webp",
+      "sha256": "94e9e84c5ac7e545aa7b3179875490b2e2554944fa07af2309b74277829acda9",
+      "bytes": 39974
+    },
+    {
+      "url": "/_astro/1.BQ4-k1kz_Z17x8Xz.webp",
+      "sha256": "5d32ba72257a387177d6a75eb05e58b9d4d4f5cdefc7e85f5546c629a6dfc54f",
+      "bytes": 126188
+    },
+    {
+      "url": "/_astro/MainGridLayout.CTvVlnPA.css",
+      "sha256": "1d28ed33998ef0a5f960847fefca7678fc4185f14e6d84823eecdbd195615aec",
+      "bytes": 16634
+    },
+    {
+      "url": "/_astro/expressive-code.DauOrSOk.css",
+      "sha256": "53e00c1c4e28adac5509407fde6294087b3186e80b48c34ffe4e4d38035bcf37",
+      "bytes": 7228
+    },
+    {
+      "url": "/_astro/Layout.0Y9dpLWS.css",
+      "sha256": "cdfecf1cf3ec38f9fd2471d3ce2860b0006364d682c4f6f1ec5950b8757601b0",
+      "bytes": 199698
+    },
+    {
+      "url": "/_astro/page.BpqnxC_1.js",
+      "sha256": "3a12ac835fbc8a3e03d32d88413c8ef0eefbd6599ff92e52e83981211a22eaae",
+      "bytes": 2210
+    },
+    {
+      "url": "/_astro/icon.DNEsxvyB_ZBBg6v.webp",
+      "sha256": "f55754dda3e8b9dc970cddca48614d4c0d1a0cbd1fdec7cfc2f17c08d5240654",
+      "bytes": 30934
+    },
+    {
+      "url": "/_astro/Search.DFOvQtsT.js",
+      "sha256": "15b904681e1bdf05367bb5264fc1951d71296ff6771daa433fd49b6c7f7b62be",
+      "bytes": 7907
+    },
+    {
+      "url": "/_astro/client.svelte.g6GBQEpI.js",
+      "sha256": "d40ea198487c00ed6d793e0944f43bb7f9c108d28100ef1f9144493dda556237",
+      "bytes": 906
+    },
+    {
+      "url": "/_astro/LightDarkSwitch.5dZ0zNr8.js",
+      "sha256": "de80e431f5a546c053af83145a4d4b7a6448e5ce8a45987e02fc8117fef2004b",
+      "bytes": 3944
+    },
+    {
+      "url": "/_astro/CategoryBar.astro_astro_type_script_index_0_lang.CE6LZULu.js",
+      "sha256": "7d765b0f0d0499da329d95840c9fd27a5bef499979caf58238571ec9b287c4e2",
+      "bytes": 4451
+    },
+    {
+      "url": "/gallery-thumbs/3eef61c1a92c92548f44814d.webp",
+      "sha256": "4a084d47e999d9d92e0f5a7b282df229e3d9871786738b0843e937d7f568bf25",
+      "bytes": 21938
+    },
+    {
+      "url": "/gallery-thumbs/38ff1b86472b7ea40d93ebde.webp",
+      "sha256": "286c54237fe9fbe11694128f4ad655b6901e9fcd6a145a2776b60ad4930d5daf",
+      "bytes": 14046
+    },
+    {
+      "url": "/_astro/DynamicSidebar.O70unBgT.js",
+      "sha256": "915764d4e40f849c238de532f634ed3c2d8ea3c392aca0f6d4ec9b065e05e802",
+      "bytes": 4007
+    },
+    {
+      "url": "/_astro/SidebarTOC.astro_astro_type_script_index_0_lang.CNta4MUT.js",
+      "sha256": "ec8dd83c44d9f766cac4416858ee859ff0aa8ee5db838d46f50fb38cd923898c",
+      "bytes": 1016
+    },
+    {
+      "url": "/_astro/FloatingTOC.astro_astro_type_script_index_0_lang.CQE0PqjP.js",
+      "sha256": "9a65a3d7471dc22a1753cce9838de88da07c26b009fe8891ee0ed1b753c07a22",
+      "bytes": 3126
+    },
+    {
+      "url": "/_astro/ImmersiveReading.astro_astro_type_script_index_0_lang.CpVaDUr7.js",
+      "sha256": "7f26c270eafe0a9ef4e9829121af23f480e5c702f450afca00535285c2041cd5",
+      "bytes": 4529
+    },
+    {
+      "url": "/_astro/SakuraEffect.astro_astro_type_script_index_0_lang.K98J9jDw.js",
+      "sha256": "c41059a7c19b1d80b502305b97f7a208d87fe3adea75174d13ac526f2785fa8e",
+      "bytes": 7531
+    },
+    {
+      "url": "/_astro/WavesEffect.astro_astro_type_script_index_0_lang.DwU8s_Lh.js",
+      "sha256": "bfd998ed053e9335815fa43367e873b8e56366aedf6f5ccb09cf518e46ab6b49",
+      "bytes": 7423
+    },
+    {
+      "url": "/_astro/FancyboxManager.astro_astro_type_script_index_0_lang.Diy9q1qz.js",
+      "sha256": "4208c03ce5cebe1bc9b70216cec6ccb8c22cccdc8d752447f5bf0437c4ad8ca3",
+      "bytes": 4154
+    },
+    {
+      "url": "/_astro/Layout.astro_astro_type_script_index_0_lang.BJjGxM6K.js",
+      "sha256": "4024eae8635187f2f3e01d8d369a09d4312bd826f2db91455903d83a67c60923",
+      "bytes": 12223
+    },
+    {
+      "url": "/gallery-thumbs/7acbfee948dd31d43c280c78.webp",
+      "sha256": "b8ac51ae40fae17542db4d64db49f552d3a8f5eddc7b6159c383e2b9a7dba060",
+      "bytes": 19892
+    },
+    {
+      "url": "/gallery-thumbs/eef818e6906cc744c6ffc99a.webp",
+      "sha256": "f1fa1257d656ea021a5ea16fd39976578d009b5f66814fba2ae519205336739a",
+      "bytes": 17304
+    },
+    {
+      "url": "/gallery-thumbs/c07b320312964664b7772a4b.webp",
+      "sha256": "465bf4634f25ffa32262b8f8814228ae8ed1302e5b72b2c1ae34efc8b3fac395",
+      "bytes": 22622
+    },
+    {
+      "url": "/gallery-thumbs/201041e37878689847809dff.webp",
+      "sha256": "eebb7825bfba8bf1e8fc34a9355630f25e23ae372d98cbdf9976fff9607ae3e2",
+      "bytes": 24102
+    },
+    {
+      "url": "/gallery-thumbs/65263acab41e405f55d4b017.webp",
+      "sha256": "64ed9fccc46f1813a550400b852676072b5e713cba9102fea04af972b2714a95",
+      "bytes": 11002
+    },
+    {
+      "url": "/gallery-thumbs/f790f18d6e55905abfeeaca7.webp",
+      "sha256": "5d20ba9c2c4de94a3e276221ee78b8e3423ed705ba33faf754a6909fbdea9056",
+      "bytes": 21484
+    },
+    {
+      "url": "/_astro/markdown.C6-1btJX.css",
+      "sha256": "191140d305163973667320016805cc7ce809836743f99774e9d64b4512135967",
+      "bytes": 6603
+    },
+    {
+      "url": "/_astro/markdown-extend.BwJBj4jr.css",
+      "sha256": "795243c912381ba3c1e1cf5635ba082b200fe8e1017fd3b4f5231945db09869e",
+      "bytes": 20529
+    }
+  ]
+}
