@@ -1,13 +1,38 @@
+/**
+ * EdgeOne Node Function: GET /api/friend-circle.json
+ * Original Firefly friend-circle JSON protocol; no GitHub Actions dependency.
+ */
 import {createEdgeOneStore} from '../../src/server/edgeone-store.mjs';
-import {FRIEND_CIRCLE_KEY,emptySnapshot} from '../../src/server/friend-circle.mjs';
+import {FRIEND_CIRCLE_KEY} from '../../src/server/friend-circle.mjs';
+import originalSnapshot from '../../public/assets/recovered-friend-circle.json';
+
+const isValid = value => value && typeof value === 'object' &&
+  Array.isArray(value.article_data) && value.article_data.length > 0 &&
+  value.statistical_data && typeof value.statistical_data === 'object';
+
 export async function onRequest({request,env={}}){
- if(request.method!=='GET')return new Response('Method not allowed',{status:405});
- try{
-  const store=await createEdgeOneStore({env});
-  const result=await store.getJSON(FRIEND_CIRCLE_KEY);
-  if(result?.schema==='firefly-friend-circle-edgeone-v2'&&Array.isArray(result.article_data))
-   return Response.json(result,{headers:{'cache-control':'public,max-age=300,stale-while-revalidate=900'}});
- }catch{/* On first deploy, allow friends page to render an informative empty state. */}
- try{const response=await fetch(new URL('/assets/recovered-friend-circle.json',request.url));if(response.ok){const body=await response.json();if(Array.isArray(body.article_data)&&body.article_data.length>0)return Response.json(body,{headers:{'cache-control':'public,max-age=300'}})}}catch{}
- return Response.json(emptySnapshot(),{headers:{'cache-control':'public,max-age=60'}});
+  if(request.method!=='GET' && request.method!=='HEAD')
+    return new Response('Method not allowed',{status:405,headers:{Allow:'GET, HEAD'}});
+
+  // An initial deployment MUST work before any cron has populated Blob.
+  // The snapshot is packaged into the EdgeOne function at build time.
+  let result=originalSnapshot;
+  let source='bundled-snapshot';
+  try{
+    const store=await createEdgeOneStore({env});
+    const latest=await store.getJSON(FRIEND_CIRCLE_KEY);
+    if(isValid(latest)){ result=latest; source='edgeone-blob'; }
+  }catch{
+    // No Blob binding or a temporary storage outage must not hide all friends.
+  }
+
+  if(!isValid(result))return Response.json({error:'Friend circle data unavailable'},{status:503});
+  const headers={
+    'content-type':'application/json; charset=utf-8',
+    'cache-control':'public, max-age=120, stale-while-revalidate=600',
+    'x-content-type-options':'nosniff',
+    'x-firefly-friend-circle-source':source
+  };
+  return request.method==='HEAD' ? new Response(null,{status:200,headers})
+    : new Response(JSON.stringify(result),{status:200,headers});
 }

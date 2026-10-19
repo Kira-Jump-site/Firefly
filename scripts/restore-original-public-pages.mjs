@@ -52,6 +52,7 @@ async function apply(dist){
   if(item.route==='friends'){
    // The owner's former SteveGuo1726 GitHub feed is gone. Retain the ORIGINAL client logic and point to EdgeOne's same-schema API.
    html=html.replace(/data-api-urls="[^"]*"/,'data-api-urls="[&quot;/api/friend-circle.json&quot;]"');
+   html=html.replace(/data-fallback-api-urls="[^"]*"/,'data-fallback-api-urls="[&quot;/assets/recovered-friend-circle.json&quot;]"');
   }
   const path=join(dist,item.route,'index.html');await mkdir(dirname(path),{recursive:true});await writeFile(path,html);
  }
