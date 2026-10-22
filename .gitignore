@@ -47,3 +47,6 @@ package/
 .codex*
 .claude
 .mimocode
+
+# Generated EdgeOne Build Output API artifacts
+.edgeone/

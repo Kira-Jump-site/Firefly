@@ -1,7 +1,7 @@
 {
   "buildCommand": "corepack pnpm build",
   "installCommand": "corepack pnpm install --no-frozen-lockfile",
-  "outputDirectory": "dist",
+  "outputDirectory": ".edgeone",
   "nodeVersion": "24.18.0",
   "headers": [
     {
