@@ -46,5 +46,9 @@ assert(navbar.includes('data-admin-entry')&&navbar.includes('material-symbols:ad
 const admin=await readFile('dist/admin/index.html','utf8');
 assert(admin.includes('AdminApp.FireflyEdgeOne.js')&&!admin.includes('AdminApp.BvivyVgR.js'),'Original compiled admin patched for EdgeOne preview login');
 const bundle=await readFile('dist/_astro/AdminApp.FireflyEdgeOne.js','utf8');
-assert(!bundle.includes('window.location.hostname==="blog.casto.top"'),'Preview custom domain restriction removed');
-console.log('EDGEONE_ADMIN_AUTH_VERIFIED: original icon, password login, cookie, logout, original dashboard, preview-domain OAuth detection');
+assert(!admin.includes('recovery-admin-gate.js'),'Injected modal must be gone');
+assert(bundle.includes('g(){t(h,fireflyDisplaySession()),N()}'),'Original six admin modules used');
+assert(bundle.includes('t(B,!fireflyIsPreview()&&Q.has(window.location.hostname))'),'Avoid legacy preview login');
+assert(bundle.includes('host.endsWith(".edgeone.cool")'),'EdgeOne preview hostname matched');
+assert(bundle.includes('token:""'),'No GitHub token for display mode');
+console.log('ADMIN_GATE_FIXED: no password overlay; original admin panels on preview, production login retained');

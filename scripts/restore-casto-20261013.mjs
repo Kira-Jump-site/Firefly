@@ -60,7 +60,7 @@ export async function restoreOriginalAdmin(dist="dist",{fetcher=fetch}={}){
   const names=["favicon.ico","logo.png","avatar.webp","desktop-1.webp","desktop-2.webp","desktop-3.webp","mobile-1.webp","mobile-2.webp","mobile-3.webp"];
   for(const name of names)await cp(join(temp,"firefly-original-media",name),join(media,name));
   await mkdir(join(out,"favicon"),{recursive:true});await cp(join(media,"favicon.ico"),join(out,"favicon/favicon.ico"));
-  const html=(await readFile(join(root,"admin/index.html"),"utf8")).replace("</body>",'<script src="/assets/recovery-admin-gate.js" defer></script></body>');
+  const html=await readFile(join(root,"admin/index.html"),"utf8");
   if(!html.includes("AdminApp.BvivyVgR.js")||!html.includes("astro-island"))throw Error("Original backend shell invalid");
   await mkdir(join(out,"admin"),{recursive:true});await writeFile(join(out,"admin/index.html"),html);
   await writeFile(join(out,"admin/restoration-provenance.json"),JSON.stringify({deployment:"dpo6mvx7243c",assetCount:manifest.assets.length,sha256:SHA}));

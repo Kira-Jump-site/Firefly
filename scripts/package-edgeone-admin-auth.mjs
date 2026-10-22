@@ -20,19 +20,30 @@ let js=await readFile(original,'utf8');
 const before='e(q)?.oauth||typeof window<"u"&&window.location.hostname==="blog.casto.top"';
 if(!js.includes(before))throw Error('Original AdminApp login guard changed. Refusing fragile patch.');
 js=js.replace(before,'e(q)?.oauth||typeof window<"u"');
- // The existing PreviewDemoAdmin component is read-only and requires no
- // administrator or GitHub session. Open this existing interface for preview
- // hosts; keep the production site's login flow unchanged.
-const previewDemoPatches=[
- ['const q=!1,Q=new Set(', 'const q=typeof window<"u"&&window.location.hostname!=="blog.casto.top",Q=new Set('],
- ['t(B,Q.has(window.location.hostname))','t(B,!q&&Q.has(window.location.hostname))'],
- ['if(e(D)){try{t(w,sessionStorage.getItem(X)==="1")}catch{t(w,!1)}e(w)&&le();return}','if(e(D)){t(w,!0);le();return}']
-];
-for(const [from,to] of previewDemoPatches){
- if(!js.includes(from))throw Error('Original demo runtime changed: '+from);
- js=js.replace(from,to);
+ // On EdgeOne preview hosts show the original six admin modules without
+// password. This is UI-only: no privileged cookie or GitHub token is issued.
+const hdr='B(){t(q,et()),e(q)||t(G,!1)}';
+const main='g(){t(h,et()),N()}';
+const oldPreview='t(B,Q.has(window.location.hostname))';
+for(const required of [hdr,main,oldPreview])if(!js.includes(required))throw Error('Original admin runtime changed: '+required);
+js=js.replace(hdr,'B(){t(q,fireflyDisplaySession()),e(q)||t(G,!1)}');
+js=js.replace(main,'g(){t(h,fireflyDisplaySession()),N()}');
+js=js.replace(oldPreview,'t(B,!fireflyIsPreview()&&Q.has(window.location.hostname))');
+js=js.replaceAll('we()','fireflySessionProbe()');
+js+=`
+function fireflyIsPreview(){
+ if(typeof window==="undefined")return false;
+ const host=window.location.hostname.toLowerCase();
+ return host.endsWith(".edgeone.cool")||host.endsWith(".pages.dnsoe5.com")||host.endsWith(".vercel.run");
 }
-
+function fireflyDisplaySession(){
+ if(!fireflyIsPreview())return et();
+ return {login:"Preview",name:"Firefly 只读预览",avatarUrl:"",
+ owner:Ye.owner,repo:Ye.repo,branch:Ye.branch,token:"",
+ oauth:false,expiresAt:Date.now()+3600000,previewOnly:true};
+}
+function fireflySessionProbe(){return fireflyIsPreview()?Promise.resolve(null):we();}
+`;
 const output='AdminApp.FireflyEdgeOne.js';
 await writeFile('dist/_astro/'+output,js);
 const originalHtml='dist/admin/index.html';
