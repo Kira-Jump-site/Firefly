@@ -20,6 +20,19 @@ let js=await readFile(original,'utf8');
 const before='e(q)?.oauth||typeof window<"u"&&window.location.hostname==="blog.casto.top"';
 if(!js.includes(before))throw Error('Original AdminApp login guard changed. Refusing fragile patch.');
 js=js.replace(before,'e(q)?.oauth||typeof window<"u"');
+ // The existing PreviewDemoAdmin component is read-only and requires no
+ // administrator or GitHub session. Open this existing interface for preview
+ // hosts; keep the production site's login flow unchanged.
+const previewDemoPatches=[
+ ['const q=!1,Q=new Set(', 'const q=typeof window<"u"&&window.location.hostname!=="blog.casto.top",Q=new Set('],
+ ['t(B,Q.has(window.location.hostname))','t(B,!q&&Q.has(window.location.hostname))'],
+ ['if(e(D)){try{t(w,sessionStorage.getItem(X)==="1")}catch{t(w,!1)}e(w)&&le();return}','if(e(D)){t(w,!0);le();return}']
+];
+for(const [from,to] of previewDemoPatches){
+ if(!js.includes(from))throw Error('Original demo runtime changed: '+from);
+ js=js.replace(from,to);
+}
+
 const output='AdminApp.FireflyEdgeOne.js';
 await writeFile('dist/_astro/'+output,js);
 const originalHtml='dist/admin/index.html';
