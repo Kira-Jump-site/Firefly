@@ -35,10 +35,11 @@ export function sessionHandler(request,env={}) {
   if(!sameOrigin(request))return json({error:'Invalid request origin'},403);
   if(method==='DELETE')return json({authenticated:false},200,{'set-cookie':`${SESSION_COOKIE}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Strict`});
   if(method!=='POST')return json({error:'Method not allowed'},405);
-  if(!env.FIREFLY_ADMIN_PASSWORD_HASH||!env.FIREFLY_ADMIN_SESSION_KEY)return json({error:invalid},503);
+  if(!env.FIREFLY_ADMIN_SESSION_KEY || (!env.FIREFLY_ADMIN_PASSWORD_HASH && !env.FIREFLY_ADMIN_PASSWORD))return json({error:invalid},503);
   if(Number(request.headers.get('content-length')||0)>5000)return json({error:'Request too large'},413);
   return request.json().then(data=>{
-    if(!verifyPassword(data?.password,env.FIREFLY_ADMIN_PASSWORD_HASH))return json({error:'Invalid credentials'},401);
+    const valid=env.FIREFLY_ADMIN_PASSWORD ? (typeof data?.password==='string' && safeEquals(data.password,env.FIREFLY_ADMIN_PASSWORD)) : verifyPassword(data?.password,env.FIREFLY_ADMIN_PASSWORD_HASH);
+    if(!valid)return json({error:'Invalid credentials'},401);
     const session=issueSession(env.FIREFLY_ADMIN_SESSION_KEY);
     return json({authenticated:true},200,{'set-cookie':`${SESSION_COOKIE}=${session}; Max-Age=28800; Path=/; HttpOnly; Secure; SameSite=Strict`});
   }).catch(()=>json({error:'Invalid JSON'},400));
