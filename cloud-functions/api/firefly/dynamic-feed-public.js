@@ -1,2 +1,14 @@
-import {createEdgeOneStore} from '../../../src/server/edgeone-store.mjs';import {createCms} from '../../../src/server/live-cms.mjs';import {toLegacyDynamicFeed} from '../../../src/server/compat.mjs';
-export async function onRequest({request,env={}}){if(request.method!=='GET')return new Response('Method not allowed',{status:405});let baseline=[];try{const r=await fetch(new URL('/assets/recovered-public-dynamic.json',request.url));if(r.ok)baseline=await r.json()}catch{}let live=[];try{const cms=createCms(await createEdgeOneStore({env}));live=toLegacyDynamicFeed(await cms.list('dynamic'))}catch{}const m=new Map();for(const item of baseline)if(item?.id)m.set(item.id,item);for(const item of live)if(item?.id)m.set(item.id,item);return Response.json([...m.values()].sort((a,b)=>b.published-a.published),{headers:{'cache-control':'public,max-age=20','x-content-type-options':'nosniff'}});}
+// EdgeOne live dynamic overlay with tombstone/private suppression.
+import {createEdgeOneStore} from '../../../src/server/edgeone-store.mjs';
+import {overlayPublicDynamic} from '../../../src/server/live-dynamic-feed.mjs';
+export async function onRequest({request,env={}}){
+ if(request.method!=='GET')return Response.json({error:'Method not allowed'},{status:405});
+ try {
+   const url=new URL('/assets/recovered-public-dynamic.json',request.url);
+   const r=await fetch(url,{headers:{accept:'application/json'}});
+   if(!r.ok)throw Error('Missing recovered public dynamic baseline');
+   const baseline=await r.json();
+   const rows=await overlayPublicDynamic(await createEdgeOneStore({env:{...process.env,...env}}),baseline);
+   return Response.json(rows,{headers:{'cache-control':'public,max-age=15','x-content-type-options':'nosniff'}});
+ }catch{return Response.json({error:'Dynamic feed temporarily unavailable'},{status:503,headers:{'cache-control':'no-store'}})}
+}
