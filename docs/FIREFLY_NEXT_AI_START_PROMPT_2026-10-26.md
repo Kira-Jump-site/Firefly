@@ -1,0 +1,9 @@
+你接手 Firefly（星遐蝶梦）个人博客，不是 KIRA，也不是上游演示站。仓库 https://github.com/Kira-Jump-site/Firefly，master HEAD 09246f9af27efaec6ddef1bb3de5695b01f3b3fe，生产 https://blog.casto.top，EdgeOne 项目 firefly-blog / makers-l0snbl3rzgnw。
+
+P0：当前 HEAD 疑似严重源码截断。scripts/package-edgeone-deployment.mjs、scripts/verify-edgeone-deployment.mjs、cloud-functions/api/live-content.js、cloud-functions/api/firefly/imagebed.js、tests/edgeone-cms-routes.test.mjs 等文件从 GitHub 读取时都约 1506 字符并在代码中间结束。沙盒版本 package-edgeone-deployment.mjs 实际 4390 字节，曾生成完整 blob SHA ef109239f40746b4351c2f306f8b69fc589eaa18，但未合入 commit，Vercel 沙盒已停止。先读回该 blob 并校验；其余逐个审计；无法恢复则回滚到已知基线 b1bb21537be8e1f0d5d24843693b733146eba16b。暂停部署，修复后运行 pnpm build、node scripts/package-edgeone-deployment.mjs、node scripts/verify-edgeone-deployment.mjs、node --test tests/*.test.mjs。
+
+必须保留已恢复的真实原站 UI、原版编译后台、CSS/JS、相册、友链朋友圈。后台六模块 Dashboard/Post/Dynamic/Gallery/Site Settings/Backup。原后台恢复源是 2026-10-13 部署 dpo6mvx7243c，归档 SHA-256 bae2cf471317ba0813e30df964c044b81ec13f11f990da24067878c6b36e764b，恢复脚本 scripts/restore-casto-20261013.mjs。不要用 src/components/recovery/AdminApp.svelte 误替换线上原版编译 JS。
+
+EdgeOne 是生产、Functions、CMS/Blob 主平台；GitHub 只存源代码，不作内容数据库；Cloudflare DNS/既有服务保留；img.casto.top 原图床不迁移/清空；Netlify Twikoo 服务与数据不动；不要碰 KIRA，不索取 PAT。预览免密码只允许看 UI，不授予编辑权。认证基础 src/server/auth.mjs（PBKDF2/HMAC，__Host-firefly-session，约 8h；FIREFLY_ADMIN_PASSWORD_HASH / FIREFLY_ADMIN_PASSWORD / FIREFLY_ADMIN_SESSION_KEY）。
+
+CMS 基础 src/server/live-cms.mjs / edgeone-store.mjs / settings.mjs / gallery.mjs / post-resolver.mjs / live-dynamic-feed.mjs 已部分实现 revision、expectedRev、状态和私密过滤。Blob 强一致不等于跨实例 CAS，进程内锁不够；未解决分布式协调前写入必须 fail-closed。只写 Blob 不会自动更新静态 Astro 页面，需打通 runtime resolver、动态 feed、搜索和缓存。先完成文章/动态实时闭环，再相册、设置、备份。必须在 EdgeOne 实际预览验证，不可用 Vercel 本地结果替代。
